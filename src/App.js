@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Navbar from "./subComponents/Navbar";
+import { routerList } from "./shared/routerList";
 
 function App() {
+  const location = useLocation();
+
+  const hideNavbarPaths = ["/payment"];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!hideNavbarPaths.includes(location.pathname) && <Navbar />}
+      <Routes>
+        {routerList.map((item) => {
+          const { id, element, path } = item;
+          return <Route key={id} path={path} element={element} />;
+        })}
+      </Routes>
     </div>
   );
 }
